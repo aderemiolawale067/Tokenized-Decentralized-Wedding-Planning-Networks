@@ -118,7 +118,7 @@
   (specialization (string-ascii 100)))
   (let
     (
-      (current-block stacks-block-height)
+      (current-block block-height)
     )
     (asserts! (is-none (map-get? arbitrators { arbitrator: tx-sender })) ERR_DISPUTE_ALREADY_EXISTS)
 
@@ -147,7 +147,7 @@
   (let
     (
       (dispute-id (var-get next-dispute-id))
-      (current-block stacks-block-height)
+      (current-block block-height)
       (resolution-deadline (+ current-block u1440)) ;; 24 hours in blocks
       (arbitrator-info (unwrap! (map-get? arbitrators { arbitrator: arbitrator }) ERR_ARBITRATOR_NOT_FOUND))
     )
@@ -186,7 +186,7 @@
     (
       (dispute (unwrap! (map-get? disputes { dispute-id: dispute-id }) ERR_DISPUTE_NOT_FOUND))
       (evidence-id (var-get next-evidence-id))
-      (current-block stacks-block-height)
+      (current-block block-height)
     )
     (asserts! (or (is-eq tx-sender (get complainant dispute)) (is-eq tx-sender (get respondent dispute))) ERR_UNAUTHORIZED)
     (asserts! (is-eq (get status dispute) "open") ERR_INVALID_STATUS)
@@ -238,7 +238,7 @@
   (let
     (
       (dispute (unwrap! (map-get? disputes { dispute-id: dispute-id }) ERR_DISPUTE_NOT_FOUND))
-      (current-block stacks-block-height)
+      (current-block block-height)
       (arbitrator-info (unwrap! (map-get? arbitrators { arbitrator: (get arbitrator dispute) }) ERR_ARBITRATOR_NOT_FOUND))
       (new-cases-handled (+ (get cases-handled arbitrator-info) u1))
     )
@@ -282,7 +282,7 @@
   (let
     (
       (dispute (unwrap! (map-get? disputes { dispute-id: dispute-id }) ERR_DISPUTE_NOT_FOUND))
-      (current-block stacks-block-height)
+      (current-block block-height)
     )
     (asserts! (or (is-eq tx-sender (get complainant dispute)) (is-eq tx-sender (get respondent dispute))) ERR_UNAUTHORIZED)
     (asserts! (is-eq (get status dispute) "resolved") ERR_INVALID_STATUS)
@@ -304,7 +304,7 @@
   (let
     (
       (dispute (unwrap! (map-get? disputes { dispute-id: dispute-id }) ERR_DISPUTE_NOT_FOUND))
-      (current-block stacks-block-height)
+      (current-block block-height)
     )
     (asserts! (is-eq (get status dispute) "appealed") ERR_INVALID_STATUS)
     (asserts! (not (is-eq tx-sender (get complainant dispute))) ERR_UNAUTHORIZED)

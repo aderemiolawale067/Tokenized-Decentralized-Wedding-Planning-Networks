@@ -93,7 +93,7 @@
   (let
     (
       (budget-id (var-get next-budget-id))
-      (current-block stacks-block-height)
+      (current-block block-height)
     )
     (asserts! (> total-budget u0) ERR_INVALID_AMOUNT)
     (asserts! (is-none (map-get? couple-budget-lookup { couple: tx-sender })) ERR_BUDGET_ALREADY_EXISTS)
@@ -170,7 +170,7 @@
       (budget (unwrap! (map-get? wedding-budgets { budget-id: budget-id }) ERR_BUDGET_NOT_FOUND))
       (category-budget (unwrap! (map-get? budget-categories { budget-id: budget-id, category: category }) ERR_CATEGORY_NOT_FOUND))
       (expense-id (var-get next-expense-id))
-      (current-block stacks-block-height)
+      (current-block block-height)
       (category-remaining (- (get allocated-amount category-budget) (get spent-amount category-budget)))
     )
     (asserts! (is-eq tx-sender (get couple budget)) ERR_UNAUTHORIZED)
@@ -208,7 +208,7 @@
       (amount (get amount expense))
       (budget (unwrap! (map-get? wedding-budgets { budget-id: budget-id }) ERR_BUDGET_NOT_FOUND))
       (category-budget (unwrap! (map-get? budget-categories { budget-id: budget-id, category: category }) ERR_CATEGORY_NOT_FOUND))
-      (current-block stacks-block-height)
+      (current-block block-height)
       (new-category-spent (+ (get spent-amount category-budget) amount))
       (new-total-spent (+ (get spent-amount budget) amount))
     )
